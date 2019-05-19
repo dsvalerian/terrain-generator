@@ -6,6 +6,9 @@ public class MapGenerator : MonoBehaviour {
     public int mapWidth;
     public int mapHeight;
     public float noiseScale;
+    public int octaves;
+    public float octaveFrequencyIncrease;
+    public float octaveAmplitudeDecrease;
 
     public void GenerateMap() {
         // Prevent Unity from crashing on empty textures.
@@ -18,7 +21,8 @@ public class MapGenerator : MonoBehaviour {
         }
 
         // Generate the noise values for the map.
-        float[,] noiseValues = Noise.GeneratorNoiseValues(mapWidth, mapHeight, noiseScale);
+        float[,] noiseValues = Noise.GeneratorNoiseValues(mapWidth, mapHeight, noiseScale,
+            octaves, octaveFrequencyIncrease, octaveAmplitudeDecrease);
 
         // Process the noise values into a 2D texture.
         MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();

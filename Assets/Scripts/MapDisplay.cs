@@ -7,7 +7,6 @@ public class MapDisplay : MonoBehaviour {
     public Renderer textureRenderer;
 
     public void DrawMap(float[,] noiseValues) {
-        // Get the dimensions of the noise values to create a texture with.
         int width = noiseValues.GetLength(0);
         int height = noiseValues.GetLength(1);
 
