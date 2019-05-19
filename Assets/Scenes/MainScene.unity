@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 404441331}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 128, y: 1, z: 128}
   m_Children: []
   m_Father: {fileID: 807799347}
   m_RootOrder: 0
@@ -161,7 +161,7 @@ MeshRenderer:
   m_GameObject: {fileID: 404441331}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -255,9 +255,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119bac9c5f3fb6f4d8e43242952bbbe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidth: 100
-  mapHeight: 100
-  noiseScale: 30
-  octaves: 4
+  mapWidth: 128
+  mapHeight: 128
+  noiseScale: 20
+  octaves: 7
   octaveFrequencyIncrease: 2
   octaveAmplitudeDecrease: 0.5
+  seed: 830885
+  terrainsTypes:
+  - label: Land
+    height: 1
+    color: {r: 0, g: 0.6603774, b: 0.08909253, a: 0}
+  - label: Water
+    height: 0.3
+    color: {r: 0.1745283, g: 0.29428467, b: 1, a: 0}

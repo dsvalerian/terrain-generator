@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class Noise {
-    private const float OFFSET_RANGE = 100000f;
+    private const int OFFSET_RANGE = 100000;
     private const float NEARLY_ZERO = 0.0001f;
 
     /*  
@@ -20,21 +20,21 @@ public static class Noise {
         details should be more frequent and have a smaller affect on the height. This helps create 
         terrain that will take into account smaller imperfections due to rocks, erosion, etc.
     */
-    public static float[,] GeneratorNoiseValues(int width, int height, float noiseScale, 
-            int octaves, float octaveFrequencyIncrease, float octaveAmplitudeDecrease) {
+    public static float[,] GenerateNoiseValues(int width, int height, float noiseScale, 
+            int octaves, float octaveFrequencyIncrease, float octaveAmplitudeDecrease, int seed) {
         // Prevent divide-by-0 errors.
         if (noiseScale <= 0) {
             noiseScale = NEARLY_ZERO;
         }
 
-        // A random offset to apply to the perlin noise.
-        float offset = Random.Range(-OFFSET_RANGE, OFFSET_RANGE);
+        // Get new offsets for getting the noise values for each octave.
+        Vector2[] offsets = RandomizeOffsets(octaves, seed);
 
         // Instantiate a 2D array for the noise map.
         float[,] noiseValues = new float[width, height];
 
         // Keep track of the range of noise values so we can normalize it to [0, 1].
-        float[] noiseRange = new float[] {float.MaxValue, float.MinValue};
+        Vector2 noiseRange = new Vector2(float.MaxValue, float.MinValue);
 
         // Loop through each value in the noise map.
         for (int y = 0; y < height; y++) {
@@ -46,11 +46,11 @@ public static class Noise {
 
                 // Calculate noise influence for each octave.
                 for (int octave = 0; octave < octaves; octave++) {
-                    float sampleX = x / noiseScale * currentFrequency;
-                    float sampleY = y / noiseScale * currentFrequency;
+                    float sampleX = x / noiseScale * currentFrequency + offsets[octave].x;
+                    float sampleY = y / noiseScale * currentFrequency + offsets[octave].y;
 
                     // Add this octave's height influence to the noise value.
-                    noiseValue += Mathf.PerlinNoise(sampleX + offset, sampleY + offset) * 2 - 1;
+                    noiseValue += (Mathf.PerlinNoise(sampleX, sampleY) * 2 - 1) * currentAmplitude;
 
                     // Update the amplitude/frequency for the next octave.
                     currentAmplitude *= octaveAmplitudeDecrease;
@@ -61,11 +61,11 @@ public static class Noise {
                 noiseValues[x, y] = noiseValue;
 
                 // Update the noise range if noiseValue falls outside of it.
-                if (noiseValue > noiseRange[1]) {
-                    noiseRange[1] = noiseValue;
+                if (noiseValue > noiseRange.y) {
+                    noiseRange.y = noiseValue;
                 }
-                else if (noiseValue < noiseRange[0]) {
-                    noiseRange[0] = noiseValue;
+                else if (noiseValue < noiseRange.x) {
+                    noiseRange.x = noiseValue;
                 }
             }
         }
@@ -74,12 +74,31 @@ public static class Noise {
     }
 
     /*
+        Get an array of Vector2s which store the x and y offsets for each octave.
+    */
+    private static Vector2[] RandomizeOffsets(int octaves, int seed) {
+        // Create a new randomizer from the seed.
+        System.Random random = new System.Random(seed);
+
+        // Randomize offsets for each octave.
+        Vector2[] offsets = new Vector2[octaves];
+        for (int octave = 0; octave < octaves; octave++) {
+            float xOffset = random.Next(-OFFSET_RANGE, OFFSET_RANGE);
+            float yOffset = random.Next(-OFFSET_RANGE, OFFSET_RANGE);
+
+            offsets[octave] = new Vector2(xOffset, yOffset);
+        }
+
+        return offsets;
+    }
+
+    /*
         Normalize values to a range of [0, 1].
 
         values: A 2D array of values
         range: The range [min, max] of the given values.
     */
-    private static float[,] NormalizeValues(float [,] values, float[] range) {
+    private static float[,] NormalizeValues(float [,] values, Vector2 range) {
         int width = values.GetLength(0);
         int height = values.GetLength(1);
 
@@ -91,7 +110,7 @@ public static class Noise {
                 // Calculate the distance (between 0 and 1) that the noise value is between the min
                 // and max of the noise range. 
                 // Ex. range = [-10, 5], value = 0, then the distance = 0.6666666
-                normalized[x, y] = Mathf.InverseLerp(range[0], range[1], values[x, y]);
+                normalized[x, y] = Mathf.InverseLerp(range.x, range.y, values[x, y]);
             }
         }
 

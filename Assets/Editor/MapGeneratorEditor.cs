@@ -13,12 +13,12 @@ public class MapGeneratorEditor : Editor {
         // If any value in the inspector is changed...
         if (DrawDefaultInspector()) {
             // Generate a new map.
-            mapGenerator.GenerateMap();
+            mapGenerator.GenerateMap(false);
         }
 
         // Add a generate button that generates a new noise map.
-        if (GUILayout.Button("Generate Noise Map")) {
-            mapGenerator.GenerateMap();
+        if (GUILayout.Button("Generate Random")) {
+            mapGenerator.GenerateMap(true);
         }
     }
 }
