@@ -14,6 +14,8 @@ public class MapGenerator : MonoBehaviour {
     public float octaveAmplitudeDecrease;
     public int seed;
 
+    public float meshHeightScale;
+
     public TerrainType[] terrainTypes;
 
     /*
@@ -45,6 +47,10 @@ public class MapGenerator : MonoBehaviour {
         // Generate and process color values into a 2D texture.
         Color[,] colorValues = GetTerrainColorValues(noiseValues);
         mapDisplay.DrawColorMap(colorValues);
+
+        // Generate and process heights onto a 3D mesh.
+        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseValues, meshHeightScale), 
+            colorValues);
     }
 
     /*
