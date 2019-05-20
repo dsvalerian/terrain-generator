@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 404441334}
   - component: {fileID: 404441333}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: NoisePlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 404441331}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -750, y: 0, z: 0}
   m_LocalScale: {x: 128, y: 1, z: 128}
   m_Children: []
   m_Father: {fileID: 807799347}
@@ -197,6 +197,98 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 404441331}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &786583727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786583731}
+  - component: {fileID: 786583730}
+  - component: {fileID: 786583728}
+  - component: {fileID: 786583729}
+  m_Layer: 0
+  m_Name: ColorPlane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &786583728
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786583727}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: bbf11d3b988e5c246abcc6f2c22bc5fd, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!64 &786583729
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786583727}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &786583730
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786583727}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &786583731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786583727}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 750, y: 0, z: 0}
+  m_LocalScale: {x: 128, y: 1, z: 128}
+  m_Children: []
+  m_Father: {fileID: 807799347}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &807799346
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,8 +300,9 @@ GameObject:
   - component: {fileID: 807799347}
   - component: {fileID: 807799349}
   - component: {fileID: 807799348}
+  - component: {fileID: 807799350}
   m_Layer: 0
-  m_Name: NoiseMap
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,6 +320,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 404441332}
+  - {fileID: 786583731}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -242,7 +336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4196b27a01b3a4fbb752813e80d5ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textureRenderer: {fileID: 404441333}
+  noiseTextureRenderer: {fileID: 404441333}
+  colorTextureRenderer: {fileID: 786583728}
 --- !u!114 &807799349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,15 +352,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapWidth: 128
   mapHeight: 128
-  noiseScale: 20
-  octaves: 7
+  noiseScale: 100
+  octaves: 5
   octaveFrequencyIncrease: 2
   octaveAmplitudeDecrease: 0.5
-  seed: 830885
-  terrainsTypes:
-  - label: Land
-    height: 1
-    color: {r: 0, g: 0.6603774, b: 0.08909253, a: 0}
-  - label: Water
-    height: 0.3
-    color: {r: 0.1745283, g: 0.29428467, b: 1, a: 0}
+  seed: 330660
+  terrainTypes:
+  - label: High-Water
+    heightRange: {x: 0.125, y: 0.25}
+    color: {r: 0.028034903, g: 0.12812418, b: 0.8490566, a: 0}
+  - label: Sand
+    heightRange: {x: 0.25, y: 0.3}
+    color: {r: 0.9733941, g: 1, b: 0.3254717, a: 0}
+  - label: Low-Land
+    heightRange: {x: 0.3, y: 0.5}
+    color: {r: 0.06425469, g: 0.8113208, b: 0, a: 0}
+  - label: High-Land
+    heightRange: {x: 0.5, y: 0.7}
+    color: {r: 0.0627451, g: 0.6509804, b: 0, a: 0}
+  - label: Mountain
+    heightRange: {x: 0.7, y: 0.85}
+    color: {r: 0.31132078, g: 0.2884501, b: 0.13363297, a: 0}
+  - label: Peak
+    heightRange: {x: 0.85, y: 1.1}
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - label: Low-Water
+    heightRange: {x: -0.1, y: 0.125}
+    color: {r: 0.02745098, g: 0.12941177, b: 0.67058825, a: 0}
+--- !u!114 &807799350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807799346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1680b3e20d1c15b4fbfc58198ca7975c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
