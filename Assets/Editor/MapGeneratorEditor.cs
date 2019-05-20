@@ -10,12 +10,15 @@ public class MapGeneratorEditor : Editor {
         // Get the map generator.
         MapGenerator mapGenerator = (MapGenerator)target;
 
-        // Draw a regular inspector window.
-        DrawDefaultInspector();
+        // If any value in the inspector is changed...
+        if (DrawDefaultInspector()) {
+            // Generate a new map.
+            mapGenerator.GenerateMap(false);
+        }
 
         // Add a generate button that generates a new noise map.
-        if (GUILayout.Button("Generate Noise Map")) {
-            mapGenerator.GenerateMap();
+        if (GUILayout.Button("Generate Random")) {
+            mapGenerator.GenerateMap(true);
         }
     }
 }
