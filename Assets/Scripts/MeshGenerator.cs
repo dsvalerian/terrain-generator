@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class MeshGenerator {
-    public static Mesh GenerateTerrainMesh(float[,] heightMap, float heightScale) {
+    public static Mesh GenerateTerrainMesh(float[,] heightMap, float heightScale, 
+            AnimationCurve heightCurve) {
         int width = heightMap.GetLength(0);
         int height = heightMap.GetLength(1);
 
@@ -22,7 +23,7 @@ public static class MeshGenerator {
             for (int x = 0; x < width; x++) {
                 // Push a vertex to the end of the array, with the height pulled from the heightmap.
                 terrainData.vertices[vertexIndex] = new Vector3(topLeftX + x, 
-                    heightMap[x, y] * heightScale, topLeftY - y);
+                    heightCurve.Evaluate(heightMap[x, y]) * heightScale, topLeftY - y);
 
                 // Push a uv mapping to the end of the array.
                 terrainData.uvData[vertexIndex] = new Vector2(x / (float)width, y / (float)height);

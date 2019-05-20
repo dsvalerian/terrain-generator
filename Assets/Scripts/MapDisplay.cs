@@ -6,11 +6,9 @@ public class MapDisplay : MonoBehaviour {
     public const int MODE_NOISE = 0;
     public const int MODE_COLOR = 1;
 
-    // A texture renderer attached to the object on which the noise map will be displayed.
-    public Renderer noiseTextureRenderer;
-    // A texture renderer attached to the object on which the color map will be displayed.
-    public Renderer colorTextureRenderer;
-
+    // A texture renderer attached to the object on which the textures are displayed.
+    public Renderer textureRenderer;
+    // Objects to help with creating a mesh.
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
 
@@ -23,8 +21,8 @@ public class MapDisplay : MonoBehaviour {
         Texture2D noiseTexture = textureGenerator.GenerateNoiseTexture(noiseValues, width, height);
 
         // Apply the noise texture to the texture renderer and scale it properly.
-        noiseTextureRenderer.sharedMaterial.mainTexture = noiseTexture;
-        noiseTextureRenderer.transform.localScale = new Vector3(width, 1, height);
+        textureRenderer.sharedMaterial.mainTexture = noiseTexture;
+        textureRenderer.transform.localScale = new Vector3(width, 1, height);
     }
 
     public void DrawColorMap(Color[,] colorValues) {
@@ -36,8 +34,8 @@ public class MapDisplay : MonoBehaviour {
         Texture2D colorTexture = textureGenerator.GenerateColorTexture(colorValues, width, height);
 
         // Apply the noise texture to the texture renderer and scale it properly.
-        colorTextureRenderer.sharedMaterial.mainTexture = colorTexture;
-        colorTextureRenderer.transform.localScale = new Vector3(width, 1, height);
+        textureRenderer.sharedMaterial.mainTexture = colorTexture;
+        textureRenderer.transform.localScale = new Vector3(width, 1, height);
     }
 
     public void DrawMesh(Mesh terrainMesh, Color[,] colorValues) {
