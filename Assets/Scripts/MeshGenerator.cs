@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class MeshGenerator {
     public static Mesh GenerateTerrainMesh(float[,] heightMap, float heightScale, 
-            AnimationCurve heightCurve) {
+            AnimationCurve heightCurve, int LOD) {
         int width = heightMap.GetLength(0);
         int height = heightMap.GetLength(1);
 
@@ -14,13 +14,27 @@ public static class MeshGenerator {
         float topLeftX = (width - 1) / -2f;
         float topLeftY = (height - 1) / 2f;
 
+        // Based on the LOD, the increment in which vertices are chosen.
+        int vertexSkip = 1;
+        if (LOD > 0) {
+            vertexSkip = LOD * 2;
+        }
+
+        int verticesPerLine = (width - 1) / vertexSkip + 1;
+
+        // Log some info about vertex decrease
+        int totalVertices = verticesPerLine * verticesPerLine;
+        float vertexDecrease = (1f / ((width * height) / totalVertices)) * 100;
+        Debug.Log("Vertices per line: " + verticesPerLine + "; Total: " + totalVertices + 
+            "; Vertex Decrease: " + vertexDecrease + "%");
+
         // We need a TerrainData variable to store vertices and triangles for our terrain mesh.
-        TerrainData terrainData = new TerrainData(width, height);
+        TerrainData terrainData = new TerrainData(verticesPerLine, verticesPerLine);
 
         // Loop through heights.
         int vertexIndex = 0;
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y += vertexSkip) {
+            for (int x = 0; x < width; x += vertexSkip) {
                 // Push a vertex to the end of the array, with the height pulled from the heightmap.
                 terrainData.vertices[vertexIndex] = new Vector3(topLeftX + x, 
                     heightCurve.Evaluate(heightMap[x, y]) * heightScale, topLeftY - y);
@@ -32,10 +46,10 @@ public static class MeshGenerator {
                 // right side and bottom of the vertex map.
                 if (x < width - 1 && y < height - 1) {
                     // Add the bottom left triangle of the square to the mesh.
-                    terrainData.AddTriangle(vertexIndex, vertexIndex + width + 1, 
-                        vertexIndex + width);
+                    terrainData.AddTriangle(vertexIndex, vertexIndex + verticesPerLine + 1, 
+                        vertexIndex + verticesPerLine);
                     // Add the top right triangle of the square to the mesh.
-                    terrainData.AddTriangle(vertexIndex + width + 1, vertexIndex, vertexIndex + 1);
+                    terrainData.AddTriangle(vertexIndex + verticesPerLine + 1, vertexIndex, vertexIndex + 1);
                 }
 
                 vertexIndex++;

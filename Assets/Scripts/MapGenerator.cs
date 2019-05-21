@@ -5,13 +5,13 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour {
     private const int SEED_RANGE = 1000000;
     private const float NEARLY_ONE = 1.0001f;
+    // LOD is based on size - 1. 240 is nice because it divides evenly by 2, 4, 6, 8, 10, and 12.
+    private const int MAP_CHUNK_SIZE = 241;
 
     public enum DrawMode {Noise, Color, Mesh};
     public DrawMode drawMode;
 
-    public int mapWidth = 128;
-    public int mapHeight = 128;
-    [Range(1, 200)]
+    [Range(1.1f, 200f)]
     public float noiseScale = 50f;
     [Range(1, 30)]
     public int octaves = 5;
@@ -27,21 +27,20 @@ public class MapGenerator : MonoBehaviour {
 
     public TerrainType[] terrainTypes;
 
+    [Range(0, 6)]
+    public int LOD;
+
     /*
         Generates a noise map and a color map based on the noise map.
     */
     public void GenerateMap(bool randomize) {
-        // Clamp values to prevent weird things from happening/crashing.
-        if (mapWidth < 1) mapWidth = 1;
-        if (mapHeight < 1) mapHeight = 1;
-
         // Get a random seed for the map.
         if (randomize) {
             seed = Random.Range(-SEED_RANGE, SEED_RANGE);
         }
 
         // Generate the noise values for the map.
-        float[,] noiseValues = Noise.GenerateNoiseValues(mapWidth, mapHeight, noiseScale,
+        float[,] noiseValues = Noise.GenerateNoiseValues(MAP_CHUNK_SIZE, MAP_CHUNK_SIZE, noiseScale,
             octaves, octaveFrequencyIncrease, octaveAmplitudeDecrease, seed);
 
         // Process the noise values based on the draw mode.
@@ -61,7 +60,7 @@ public class MapGenerator : MonoBehaviour {
 
             // Generate and process heights onto a 3D mesh.
             mapDisplay.DrawMesh(
-                MeshGenerator.GenerateTerrainMesh(noiseValues, meshHeightScale, meshHeightCurve), 
+                MeshGenerator.GenerateTerrainMesh(noiseValues, meshHeightScale, meshHeightCurve, LOD), 
                 colorValues);
         }
     }
@@ -70,10 +69,10 @@ public class MapGenerator : MonoBehaviour {
     Get the color values for the terrain heights that correspond to the noise values.
     */
     private Color[,] GetTerrainColorValues(float[,] noiseValues) {
-        Color[,] colorValues = new Color[mapWidth, mapHeight];
+        Color[,] colorValues = new Color[MAP_CHUNK_SIZE, MAP_CHUNK_SIZE];
         // Loop through the map.
-        for (int y = 0; y < mapHeight; y++) {
-            for (int x = 0; x < mapWidth; x++) {
+        for (int y = 0; y < MAP_CHUNK_SIZE; y++) {
+            for (int x = 0; x < MAP_CHUNK_SIZE; x++) {
                 Color color = Color.white;
 
                 // Loop through each terrain type.
