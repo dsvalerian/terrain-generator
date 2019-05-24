@@ -6,29 +6,36 @@ public class MapGenerator : MonoBehaviour {
     private const int SEED_RANGE = 1000000;
     private const float NEARLY_ONE = 1.0001f;
     // LOD is based on size - 1. 240 is nice because it divides evenly by 2, 4, 6, 8, 10, and 12.
-    private const int MAP_CHUNK_SIZE = 241;
+    public const int MAP_CHUNK_SIZE = 241;
+
+    public const float DEFAULT_NOISE_SCALE = 50f;
+    public const int DEFAULT_OCTAVES = 5;
+    public const float DEFAULT_OCTAVE_FREQUENCY_INCREASE = 2f;
+    public const float DEFAULT_OCTAVE_AMPLITUDE_DECREASE = 0.5f;
+    public const float DEFAULT_MESH_HEIGHT_SCALE = 65f;
+    public const int DEFAULT_LOD = 0;
 
     public enum DrawMode {Noise, Color, Mesh};
     public DrawMode drawMode;
 
     [Range(1.1f, 200f)]
-    public float noiseScale = 50f;
+    public float noiseScale = DEFAULT_NOISE_SCALE;
     [Range(1, 30)]
-    public int octaves = 5;
+    public int octaves = DEFAULT_OCTAVES;
     [Range(1, 15)]
-    public float octaveFrequencyIncrease = 2f;
+    public float octaveFrequencyIncrease = DEFAULT_OCTAVE_FREQUENCY_INCREASE;
     [Range(0, 1)]
-    public float octaveAmplitudeDecrease = 0.5f;
+    public float octaveAmplitudeDecrease = DEFAULT_OCTAVE_AMPLITUDE_DECREASE;
     public int seed;
 
     [Range(0, 500)]
-    public float meshHeightScale = 200f;
+    public float meshHeightScale = DEFAULT_MESH_HEIGHT_SCALE;
     public AnimationCurve meshHeightCurve;
 
     public TerrainType[] terrainTypes;
 
     [Range(0, 6)]
-    public int LOD;
+    public int LOD = DEFAULT_LOD;
 
     /*
         Generates a noise map and a color map based on the noise map.
@@ -90,6 +97,15 @@ public class MapGenerator : MonoBehaviour {
         }
 
         return colorValues;
+    }
+
+    public void ResetValues() {
+        noiseScale = DEFAULT_NOISE_SCALE;
+        octaves = DEFAULT_OCTAVES;
+        octaveFrequencyIncrease = DEFAULT_OCTAVE_FREQUENCY_INCREASE;
+        octaveAmplitudeDecrease = DEFAULT_OCTAVE_AMPLITUDE_DECREASE;
+        meshHeightScale = DEFAULT_MESH_HEIGHT_SCALE;
+        LOD = DEFAULT_LOD;
     }
 }
 

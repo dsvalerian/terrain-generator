@@ -23,10 +23,10 @@ public static class MeshGenerator {
         int verticesPerLine = (width - 1) / vertexSkip + 1;
 
         // Log some info about vertex decrease
-        int totalVertices = verticesPerLine * verticesPerLine;
-        float vertexDecrease = (1f / ((width * height) / totalVertices)) * 100;
-        Debug.Log("Vertices per line: " + verticesPerLine + "; Total: " + totalVertices + 
-            "; Vertex Decrease: " + vertexDecrease + "%");
+        // int totalVertices = verticesPerLine * verticesPerLine;
+        // float vertexDecrease = (1f / ((width * height) / totalVertices)) * 100;
+        // Debug.Log("Vertices per line: " + verticesPerLine + "; Total: " + totalVertices + 
+        //     "; Vertex Decrease: " + vertexDecrease + "%");
 
         // We need a TerrainData variable to store vertices and triangles for our terrain mesh.
         TerrainData terrainData = new TerrainData(verticesPerLine, verticesPerLine);
