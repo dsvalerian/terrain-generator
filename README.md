@@ -2,7 +2,7 @@
 A Unity tool that procedurally generates a chunk of terrain from Perlin noise heightmaps.
 
 ## Live Demo
-A live demo of the tool can be found here: http://dmitrisalov.pythonanywhere.com/terrain-generator
+A live demo of the tool can be found on [my portfolio website](http://dmitrisalov.pythonanywhere.com/terrain-generator).
 Users may alter different values in the generation algorithm and the chunk will be updated in real time. To regenerate a brand new chunk, click the "generate" button.
 
 ## How It Works
